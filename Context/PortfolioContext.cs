@@ -1,0 +1,21 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MY_Academy_Portfolio2.Entities;
+namespace MY_Academy_Portfolio2.Context
+
+{
+    public class PortfolioContext : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=emirhan;Database=PortfolioDbNight2;integrated security=true;trust server certificate=true");
+        }
+        public DbSet<About> Abouts { get; set; }
+        public DbSet<Education> Educations { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<HeroSection> HeroSections { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Project> Projects { get; set; }
+    }
+}

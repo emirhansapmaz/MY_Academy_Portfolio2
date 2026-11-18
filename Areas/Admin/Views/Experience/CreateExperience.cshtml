@@ -1,0 +1,42 @@
+﻿@model MY_Academy_Portfolio2.Entities.Experience
+
+@{
+    ViewData["Title"] = "Yeni Deneyim";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<form method="post">
+    <div class="container-fluid p-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            <h5 class="fw-bold mb-4">Yeni Deneyim Ekle</h5>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Başlık</label>
+                <input type="text" asp-for="Title" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Şirket Adı</label>
+                <input type="text" asp-for="Company" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Alt Başlık</label>
+                <input type="text" asp-for="SideTitle" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Çalışma Zamanı</label>
+                <input type="text" asp-for="Duration" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Çalışma Türü</label>
+                <input type="text" asp-for="WorkType" class="form-control" />
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Açıklama</label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary px-4">Deneyimi Kaydet</button>
+                <a href="/Admin/Experience/ExperienceList" class="btn btn-outline-secondary ms-2">Vazgeç</a>
+            </div>
+        </div>
+    </div>
+</form>

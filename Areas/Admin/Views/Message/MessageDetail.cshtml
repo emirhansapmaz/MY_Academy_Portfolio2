@@ -1,0 +1,40 @@
+@model MY_Academy_Portfolio2.Entities.Message
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">Mesaj Detayı</h5>
+            <span class="badge bg-light text-dark">@Model?.SendDate.ToString("dd MMMM yyyy HH:mm")</span>
+        </div>
+        <div class="card-body p-4">
+            <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-semibold">Gönderen</label>
+                <div class="fs-6 fw-bold">@Model?.NameSurname</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-semibold">E-posta</label>
+                <div><a href="mailto:@Model?.Email" class="text-decoration-none">@Model?.Email</a></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-semibold">Konu</label>
+                <div class="fw-semibold">@Model?.Subject</div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label text-muted small text-uppercase fw-semibold">Mesaj</label>
+                <div class="p-3 bg-light rounded-3">@Model?.MessageContent</div>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/Admin/Message/MessageList" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Mesajlara Dön
+                </a>
+                <a href="/Admin/Message/DeleteMessage/@Model?.MessageId" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Mesajı Sil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
