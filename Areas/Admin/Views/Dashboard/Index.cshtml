@@ -11,14 +11,14 @@
 
 <style>
     .dash {
-        font-family: "Segoe UI", Roboto, Arial, sans-serif;
-        color: #1f2937;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--text-primary);
         padding: 8px 4px 24px;
     }
 
-        .dash * {
-            box-sizing: border-box;
-        }
+    .dash * {
+        box-sizing: border-box;
+    }
 
     .dash-header {
         display: flex;
@@ -29,33 +29,44 @@
         margin-bottom: 24px;
     }
 
-        .dash-header h1 {
-            font-size: 26px;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .dash-header p {
-            margin: 4px 0 0;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-    .dash-btn {
-        background: #4f46e5;
+    .dash-header h1 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
         color: #fff;
-        border: none;
-        padding: 9px 16px;
-        border-radius: 8px;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-block;
+        margin: 0;
+        letter-spacing: -0.02em;
     }
 
-        .dash-btn:hover {
-            background: #4338ca;
-            color: #fff;
-        }
+    .dash-header p {
+        margin: 4px 0 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+
+    .dash-btn {
+        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%);
+        color: #fff;
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        padding: 9px 18px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+        transition: var(--transition-base);
+    }
+
+    .dash-btn:hover {
+        background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+        border-color: rgba(147, 197, 253, 0.6);
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+    }
 
     .dash-grid {
         display: grid;
@@ -73,28 +84,41 @@
     }
 
     .dash-card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 2px rgba(0,0,0,.04);
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: var(--shadow-card);
+        transition: var(--transition-base);
     }
 
-        .dash-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 0 0 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .dash-card:hover {
+        border-color: var(--steel-ice-border);
+        transform: translateY(-2px);
+    }
 
-            .dash-card h3 a {
-                font-size: 13px;
-                font-weight: 500;
-                color: #4f46e5;
-                text-decoration: none;
-            }
+    .dash-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        letter-spacing: -0.01em;
+    }
+
+    .dash-card h3 a {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--steel-ice);
+        text-decoration: none;
+        transition: var(--transition-base);
+    }
+
+    .dash-card h3 a:hover {
+        color: #fff;
+    }
 
     .stat {
         display: flex;
@@ -105,7 +129,7 @@
     .stat-icon {
         width: 52px;
         height: 52px;
-        border-radius: 12px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -115,67 +139,77 @@
 
     .stat-label {
         font-size: 13px;
-        color: #6b7280;
+        color: var(--text-secondary);
         margin: 0;
+        font-weight: 500;
     }
 
     .stat-value {
         font-size: 28px;
-        font-weight: 700;
+        font-weight: 800;
         margin: 2px 0 0;
         line-height: 1.1;
+        color: #fff;
+        letter-spacing: -0.02em;
     }
 
     .stat-sub {
         font-size: 12px;
-        color: #9ca3af;
+        color: var(--text-muted);
         margin-top: 4px;
     }
 
     .bg-indigo {
-        background: #eef2ff;
-        color: #4f46e5;
+        background: rgba(37, 99, 235, 0.16);
+        color: var(--steel-ice);
+        border: 1px solid var(--steel-ice-border);
     }
 
     .bg-green {
-        background: #ecfdf5;
-        color: #059669;
+        background: rgba(34, 197, 94, 0.16);
+        color: #4ADE80;
+        border: 1px solid rgba(74, 222, 128, 0.25);
     }
 
     .bg-amber {
-        background: #fffbeb;
-        color: #d97706;
+        background: rgba(245, 158, 11, 0.16);
+        color: #FBBF24;
+        border: 1px solid rgba(251, 191, 36, 0.25);
     }
 
     .bg-sky {
-        background: #f0f9ff;
-        color: #0284c7;
+        background: rgba(56, 189, 248, 0.16);
+        color: #38BDF8;
+        border: 1px solid rgba(56, 189, 248, 0.25);
     }
 
     .progress-row {
         margin-bottom: 18px;
     }
 
-        .progress-row:last-child {
-            margin-bottom: 0;
-        }
+    .progress-row:last-child {
+        margin-bottom: 0;
+    }
 
     .progress-top {
         display: flex;
         justify-content: space-between;
-        font-size: 14px;
+        font-size: 13px;
         margin-bottom: 6px;
+        color: #E2E8F0;
+        font-weight: 500;
     }
 
-        .progress-top span:last-child {
-            color: #6b7280;
-        }
+    .progress-top span:last-child {
+        color: var(--text-secondary);
+    }
 
     .progress-bar {
-        height: 10px;
-        background: #f3f4f6;
+        height: 8px;
+        background: var(--navy-900);
         border-radius: 99px;
         overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .progress-fill {
@@ -206,12 +240,14 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
     .donut-inner {
         width: 96px;
         height: 96px;
-        background: #fff;
+        background: var(--card-bg);
         border-radius: 50%;
         display: flex;
         flex-direction: column;
@@ -219,35 +255,41 @@
         justify-content: center;
     }
 
-        .donut-inner strong {
-            font-size: 22px;
-        }
+    .donut-inner strong {
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+    }
 
-        .donut-inner small {
-            font-size: 11px;
-            color: #6b7280;
-        }
+    .donut-inner small {
+        font-size: 11px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
 
     .legend {
         list-style: none;
         padding: 0;
         margin: 0;
-        font-size: 14px;
+        font-size: 13px;
+        color: var(--text-secondary);
     }
 
-        .legend li {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
+    .legend li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
 
-        .legend i {
-            width: 10px;
-            height: 10px;
-            border-radius: 3px;
-            display: inline-block;
-        }
+    .legend i {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        display: inline-block;
+    }
 
     .dash-table {
         width: 100%;
@@ -255,44 +297,47 @@
         font-size: 14px;
     }
 
-        .dash-table th {
-            text-align: left;
-            font-weight: 600;
-            color: #6b7280;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .03em;
-            padding: 10px 12px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #f9fafb;
-        }
+    .dash-table th {
+        text-align: left;
+        font-weight: 600;
+        color: var(--steel-light);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--navy-800);
+    }
 
-        .dash-table td {
-            padding: 12px;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: middle;
-        }
+    .dash-table td {
+        padding: 14px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--text-primary);
+        vertical-align: middle;
+    }
 
-        .dash-table tr:last-child td {
-            border-bottom: none;
-        }
+    .dash-table tr:last-child td {
+        border-bottom: none;
+    }
 
-        .dash-table tr:hover td {
-            background: #fafafa;
-        }
+    .dash-table tr:hover td {
+        background: rgba(37, 99, 235, 0.06);
+    }
 
     .avatar {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        background: #e0e7ff;
-        color: #4338ca;
+        background: rgba(37, 99, 235, 0.2);
+        border: 1px solid var(--steel-ice-border);
+        color: var(--steel-light);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-weight: 600;
-        font-size: 13px;
+        font-weight: 700;
+        font-size: 12px;
         margin-right: 10px;
+        flex-shrink: 0;
     }
 
     .name-cell {
@@ -301,26 +346,28 @@
     }
 
     .muted {
-        color: #6b7280;
+        color: var(--text-muted);
         font-size: 13px;
     }
 
     .badge {
         display: inline-block;
-        padding: 3px 10px;
+        padding: 4px 10px;
         border-radius: 99px;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 600;
     }
 
     .badge-read {
-        background: #ecfdf5;
-        color: #047857;
+        background: rgba(34, 197, 94, 0.14);
+        color: #4ADE80;
+        border: 1px solid rgba(74, 222, 128, 0.25);
     }
 
     .badge-unread {
-        background: #fef3c7;
-        color: #b45309;
+        background: rgba(245, 158, 11, 0.14);
+        color: #FBBF24;
+        border: 1px solid rgba(251, 191, 36, 0.25);
     }
 
     .table-scroll {
@@ -333,17 +380,22 @@
         margin: 0;
     }
 
-        .activity li {
-            display: flex;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f3f4f6;
-            font-size: 14px;
-        }
+    .activity li {
+        display: flex;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
 
-            .activity li:last-child {
-                border-bottom: none;
-            }
+    .activity li b {
+        color: #fff;
+    }
+
+    .activity li:last-child {
+        border-bottom: none;
+    }
 
     .dot {
         width: 9px;
@@ -354,10 +406,10 @@
     }
 
     .activity .time {
-        font-size: 12px;
-        color: #9ca3af;
+        font-size: 11px;
+        color: var(--text-muted);
         display: block;
-        margin-top: 2px;
+        margin-top: 3px;
     }
 
     .quick-links {
@@ -366,36 +418,39 @@
         gap: 10px;
     }
 
-        .quick-links a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            color: #1f2937;
-            text-decoration: none;
-            font-size: 14px;
-        }
+    .quick-links a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        color: var(--text-primary);
+        background: var(--navy-900);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: var(--transition-base);
+    }
 
-            .quick-links a:hover {
-                border-color: #4f46e5;
-                background: #f5f7ff;
-            }
+    .quick-links a:hover {
+        border-color: var(--steel-ice);
+        background: rgba(37, 99, 235, 0.12);
+        color: #fff;
+        transform: translateY(-1px);
+    }
 </style>
 
 <div class="dash">
 
-    <!-- Başlık -->
     <div class="dash-header">
         <div>
             <h1>Dashboard</h1>
             <p>Hoş geldiniz! Portfolyo sitenizin genel durumu aşağıda.</p>
         </div>
-        <a href="#" class="dash-btn">✉ Tüm Mesajlar</a>
+        <a href="/Admin/Message/MessageList" class="dash-btn">✉ Tüm Mesajlar</a>
     </div>
 
-    <!-- İstatistik kartları -->
     <div class="dash-grid dash-stats">
         <div class="dash-card stat">
             <div class="stat-icon bg-indigo">✉</div>
@@ -431,7 +486,6 @@
         </div>
     </div>
 
-    <!-- Mesaj durumu + Grafik -->
     <div class="dash-grid dash-main">
         <div class="dash-card">
             <h3>Mesaj Durumu</h3>
@@ -457,15 +511,14 @@
                 <ul class="legend">
                     <li><i style="background:#10b981"></i> Okunmuş (@readCount)</li>
                     <li><i style="background:#f59e0b"></i> Okunmamış (@unreadCount)</li>
-                    <li><i style="background:#4f46e5"></i> Toplam (@total)</li>
+                    <li><i style="background:#2563EB"></i> Toplam (@total)</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Hızlı mesaj listesi (statik) -->
     <div class="dash-card" style="margin-bottom:20px;">
-        <h3>Son Mesajlar <a href="#">Tümünü gör →</a></h3>
+        <h3>Son Mesajlar <a href="/Admin/Message/MessageList">Tümünü gör →</a></h3>
         <div class="table-scroll">
             <table class="dash-table">
                 <thead>
@@ -512,27 +565,26 @@
         </div>
     </div>
 
-    <!-- Son aktiviteler + Hızlı erişim (statik) -->
     <div class="dash-grid dash-main">
         <div class="dash-card">
             <h3>Son Aktiviteler</h3>
             <ul class="activity">
-                <li><span class="dot" style="background:#4f46e5"></span><div>Yeni bir proje eklendi: <b>E-Ticaret Sitesi</b><span class="time">2 saat önce</span></div></li>
+                <li><span class="dot" style="background:#2563EB"></span><div>Yeni bir proje eklendi: <b>E-Ticaret Sitesi</b><span class="time">2 saat önce</span></div></li>
                 <li><span class="dot" style="background:#10b981"></span><div>Hakkımda bölümü güncellendi<span class="time">Dün</span></div></li>
                 <li><span class="dot" style="background:#f59e0b"></span><div>Yeni yetenek eklendi: <b>ASP.NET Core</b><span class="time">3 gün önce</span></div></li>
-                <li><span class="dot" style="background:#0284c7"></span><div>Deneyim bilgileri düzenlendi<span class="time">1 hafta önce</span></div></li>
+                <li><span class="dot" style="background:#38BDF8"></span><div>Deneyim bilgileri düzenlendi<span class="time">1 hafta önce</span></div></li>
             </ul>
         </div>
 
         <div class="dash-card">
             <h3>Hızlı Erişim</h3>
             <div class="quick-links">
-                <a href="#">📁 Projeler</a>
-                <a href="#">🛠 Yetenekler</a>
-                <a href="#">💼 Deneyimler</a>
-                <a href="#">🎓 Eğitim</a>
-                <a href="#">👤 Hakkımda</a>
-                <a href="#">✉ Mesajlar</a>
+                <a href="/Admin/Project/Index">📁 Projeler</a>
+                <a href="/Admin/Skill/Index">🛠 Yetenekler</a>
+                <a href="/Admin/Experience/ExperienceList">💼 Deneyimler</a>
+                <a href="/Admin/Education/Index">🎓 Eğitim</a>
+                <a href="/Admin/About/Index">👤 Hakkımda</a>
+                <a href="/Admin/Message/MessageList">✉ Mesajlar</a>
             </div>
         </div>
     </div>
