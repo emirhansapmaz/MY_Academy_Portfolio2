@@ -1,26 +1,31 @@
 ﻿@model List<MY_Academy_Portfolio2.Entities.Message>
 
 @{
-    ViewData["Title"] = "Mesaj Listesi";
+    ViewData["Title"] = "İletişim & Mesaj Listesi";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
 
 <div class="container-fluid p-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold mb-0">Gelen Mesajlar</h4>
-        <span class="badge bg-light text-primary border px-3 py-2">Toplam: @Model.Count Mesaj</span>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">İletişim & Gelen Mesajlar</h4>
+            <p class="text-secondary small mb-0">Web sitenizin iletişim formundan iletilen mesajları buradan inceleyebilirsiniz.</p>
+        </div>
+        <span class="badge bg-light text-primary border px-3 py-2 fw-semibold">Toplam: @Model.Count Mesaj</span>
     </div>
+
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>Gönderici</th>
-                        <th>Email</th>
+                        <th>Gönderen</th>
+                        <th>E-posta</th>
                         <th>Konu</th>
                         <th>Tarih</th>
-                        <th>Mesajı Aç</th>
+                        <th>Durum</th>
+                        <th>İncele</th>
                         <th>Sil</th>
                     </tr>
                 </thead>
@@ -29,12 +34,34 @@
                     {
                         <tr>
                             <td>@item.MessageId</td>
-                            <td class="fw-semibold">@item.NameSurname</td>
-                            <td>@item.Email</td>
-                            <td>@item.Subject</td>
-                            <td>@item.SendDate.ToString("dd MMM yyyy")</td>
-                            <td><a href="/Admin/Message/MessageDetail/@item.MessageId" class="btn btn-sm btn-primary">Mesajı Aç</a></td>
-                            <td><a href="/Admin/Message/DeleteMessage/@item.MessageId" class="btn btn-sm btn-outline-danger">Sil</a></td>
+                            <td class="fw-semibold text-white">@item.NameSurname</td>
+                            <td><a href="mailto:@item.Email" class="text-secondary text-decoration-none small">@item.Email</a></td>
+                            <td class="fw-medium">@item.Subject</td>
+                            <td>
+                                <span class="text-secondary small">
+                                    <i class="bi bi-clock me-1"></i>@item.SendDate.ToString("dd MMM yyyy HH:mm")
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.IsRead)
+                                {
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small">Okundu</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-2 py-1 small">Yeni</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/Message/MessageDetail/@item.MessageId" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-envelope-open me-1"></i> Mesajı Aç
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/Admin/Message/DeleteMessage/@item.MessageId" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');">
+                                    <i class="bi bi-trash"></i> Sil
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>

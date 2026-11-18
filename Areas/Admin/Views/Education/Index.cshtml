@@ -1,0 +1,62 @@
+@model List<MY_Academy_Portfolio2.Entities.Education>
+
+@{
+    ViewData["Title"] = "Eğitim Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">Eğitim Bilgileri</h4>
+            <p class="text-secondary small mb-0">Portfolyo sitesinde zaman çizelgesinde listelenen akademik geçmişiniz.</p>
+        </div>
+        <a href="/Admin/Education/CreateEducation" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Yeni Eğitim Ekle
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Okul / Kurum</th>
+                        <th>Bölüm / Derece</th>
+                        <th>Tarih Aralığı</th>
+                        <th>Açıklama</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.EducationId</td>
+                            <td class="fw-semibold text-white">@item.Title</td>
+                            <td><span class="text-primary font-weight-500">@item.SubTitle</span></td>
+                            <td>
+                                <span class="badge bg-light text-primary border">
+                                    <i class="bi bi-calendar3 me-1"></i> @item.Duration
+                                </span>
+                            </td>
+                            <td class="text-secondary small" style="max-width: 280px;">@item.Description</td>
+                            <td>
+                                <a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Sil
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/Admin/Education/UpdateEducation/@item.EducationId" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-pencil"></i> Güncelle
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

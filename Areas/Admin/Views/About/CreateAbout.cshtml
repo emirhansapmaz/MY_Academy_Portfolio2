@@ -1,0 +1,66 @@
+@model MY_Academy_Portfolio2.Entities.About
+
+@{
+    ViewData["Title"] = "Hakkımda Ekle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<form method="post" asp-area="Admin" asp-action="CreateAbout">
+    <div class="container-fluid p-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                <div class="form-card-icon">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-0">Hakkımda Bilgisi Ekle</h5>
+                    <span class="text-secondary small">Portfolyo ana sayfasında yer alacak hakkımda içeriğini oluşturun.</span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Adınız Soyadınız *</label>
+                    <input type="text" asp-for="NameSurname" class="form-control" placeholder="Örn: Poyraz Alsever" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Meslek / Ünvan *</label>
+                    <input type="text" asp-for="JobTitle" class="form-control" placeholder="Örn: Bilgisayar Mühendisi" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Konum *</label>
+                    <input type="text" asp-for="Location" class="form-control" placeholder="Örn: İstanbul, Türkiye" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Uzmanlık Alanı / Deneyim *</label>
+                    <input type="text" asp-for="Experience" class="form-control" placeholder="Örn: Full Stack Web Development" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">E-posta Adresi *</label>
+                    <input type="email" asp-for="Email" class="form-control" placeholder="Örn: poyraz@example.com" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Çalışma Durumu / Rozet Metni</label>
+                    <input type="text" asp-for="OpenToWork" class="form-control" placeholder="Örn: Yeni projelere ve iş birliklerine açık" />
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Biyografi & Detaylı Açıklama *</label>
+                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Kendinizi tanıtan detaylı biyografinizi yazınız..." required></textarea>
+                </div>
+
+                <div class="col-12 mt-4 pt-2 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-lg me-1"></i> Bilgileri Kaydet
+                    </button>
+                    <a href="/Admin/About/Index" class="btn btn-outline-secondary px-4">Vazgeç</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

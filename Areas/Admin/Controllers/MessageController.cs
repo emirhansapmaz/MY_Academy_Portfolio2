@@ -12,9 +12,15 @@ namespace MY_Academy_Portfolio2.Areas.Admin.Controllers
         {
             _context = context;
         }
+
+        public IActionResult Index()
+        {
+            return RedirectToAction("MessageList");
+        }
+
         public IActionResult MessageList()
         {
-            var values = _context.Messages.ToList();
+            var values = _context.Messages.OrderByDescending(x => x.SendDate).ToList();
             return View(values);
         }
 
@@ -47,8 +53,11 @@ namespace MY_Academy_Portfolio2.Areas.Admin.Controllers
         public IActionResult DeleteMessage(int id)
         {
             var value = _context.Messages.Find(id);
-            _context.Messages.Remove(value);
-            _context.SaveChanges();
+            if (value != null)
+            {
+                _context.Messages.Remove(value);
+                _context.SaveChanges();
+            }
             return RedirectToAction("MessageList");
         }
     }

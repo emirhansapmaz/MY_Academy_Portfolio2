@@ -17,5 +17,6 @@ namespace MY_Academy_Portfolio2.Context
         public DbSet<HeroSection> HeroSections { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Skill> Skills { get; set; }
     }
 }

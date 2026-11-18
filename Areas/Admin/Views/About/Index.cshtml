@@ -1,0 +1,88 @@
+@model MY_Academy_Portfolio2.Entities.About
+
+@{
+    ViewData["Title"] = "Hakkımda Bilgileri";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">Hakkımda Bilgileri</h4>
+            <p class="text-secondary small mb-0">Portfolyo ana sayfasında görüntülenen profil ve biyografi detayları.</p>
+        </div>
+        <div>
+            <a href="/Admin/About/UpdateAbout/@Model.AboutId" class="btn btn-primary me-2">
+                <i class="bi bi-pencil-square me-1"></i> Bilgileri Güncelle
+            </a>
+            <a href="/Admin/About/CreateAbout" class="btn btn-outline-secondary">
+                <i class="bi bi-plus-lg me-1"></i> Yeni Ekle
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="form-card-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">@Model.NameSurname</h5>
+                        <span class="text-secondary small">@Model.JobTitle</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small text-uppercase">Ad Soyad</label>
+                    <div class="fw-semibold text-white">@Model.NameSurname</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small text-uppercase">Meslek / Ünvan</label>
+                    <div class="fw-semibold text-white">@Model.JobTitle</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small text-uppercase">Konum</label>
+                    <div class="fw-semibold text-white">@Model.Location</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small text-uppercase">Uzmanlık / Deneyim</label>
+                    <div class="fw-semibold text-white">@Model.Experience</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small text-uppercase">E-posta</label>
+                    <div class="fw-semibold text-primary">@Model.Email</div>
+                </div>
+
+                <div class="mt-auto pt-3">
+                    <span class="badge bg-success-subtle text-success p-2 w-100 text-center">
+                        <i class="bi bi-check-circle me-1"></i> @Model.OpenToWork
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <h5 class="fw-bold mb-3 pb-2 border-bottom">Biyografi & Açıklama</h5>
+                <p class="text-secondary" style="line-height: 1.8; font-size: 0.95rem;">
+                    @Model.Description
+                </p>
+
+                <div class="mt-auto pt-4 border-top d-flex gap-2">
+                    <a href="/Admin/About/UpdateAbout/@Model.AboutId" class="btn btn-primary px-4">
+                        <i class="bi bi-pencil me-1"></i> Düzenle
+                    </a>
+                    <a href="/" target="_blank" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-eye me-1"></i> Sitede Gör
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+@model List<MY_Academy_Portfolio2.Entities.Skill>
+
+<section id="skills" style="background-color: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">TEKNİK YETKİNLİKLER</span>
+            <h2 class="section-title">Yeteneklerim</h2>
+            <p class="section-subtitle">Fikirleri çalışan yazılımlara dönüştürürken kullandığım teknolojiler.</p>
+        </div>
+
+        <div class="row g-4">
+            @{
+                var skillList = Model != null && Model.Any() ? Model : new List<MY_Academy_Portfolio2.Entities.Skill>
+                {
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "C#", Value = 92, Category = "Backend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "ASP.NET Core", Value = 90, Category = "Backend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Web API", Value = 88, Category = "Backend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "EF Core", Value = 85, Category = "Backend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "LINQ", Value = 85, Category = "Backend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "HTML5 & CSS3", Value = 90, Category = "Frontend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "JavaScript (ES6+)", Value = 80, Category = "Frontend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Bootstrap 5", Value = 90, Category = "Frontend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Responsive Design", Value = 88, Category = "Frontend Development" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "MS SQL Server", Value = 88, Category = "Database Technologies" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "PostgreSQL", Value = 75, Category = "Database Technologies" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Git & GitHub", Value = 88, Category = "Tools & Practices" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Docker", Value = 70, Category = "Tools & Practices" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Postman & Swagger", Value = 85, Category = "Tools & Practices" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "OOP (Nesne Yönelimli)", Value = 90, Category = "Software Architecture" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "SOLID Principles", Value = 85, Category = "Software Architecture" },
+                    new MY_Academy_Portfolio2.Entities.Skill { Title = "Clean Architecture", Value = 82, Category = "Software Architecture" }
+                };
+
+                var grouped = skillList.GroupBy(x => string.IsNullOrWhiteSpace(x.Category) ? "Genel Yetkinlikler" : x.Category);
+            }
+
+            @foreach (var group in grouped)
+            {
+                var catName = group.Key.ToLower();
+                var iconClass = "bi-code-slash";
+                var iconBoxClass = "bg-icon-blue";
+
+                if (catName.Contains("backend"))
+                {
+                    iconClass = "bi-hdd-network";
+                    iconBoxClass = "bg-icon-purple";
+                }
+                else if (catName.Contains("front"))
+                {
+                    iconClass = "bi-browser-chrome";
+                    iconBoxClass = "bg-icon-blue";
+                }
+                else if (catName.Contains("data") || catName.Contains("sql"))
+                {
+                    iconClass = "bi-database";
+                    iconBoxClass = "bg-icon-mint";
+                }
+                else if (catName.Contains("tool") || catName.Contains("devops") || catName.Contains("pratik"))
+                {
+                    iconClass = "bi-tools";
+                    iconBoxClass = "bg-icon-peach";
+                }
+                else if (catName.Contains("arch") || catName.Contains("mimar"))
+                {
+                    iconClass = "bi-diagram-3";
+                    iconBoxClass = "bg-icon-purple";
+                }
+
+                <div class="col-lg-4 col-md-6 reveal-on-scroll">
+                    <div class="skill-group-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="float-icon-box @iconBoxClass">
+                                    <i class="bi @iconClass"></i>
+                                </div>
+                                <h4 class="fs-5 fw-bold mb-0">@group.Key</h4>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small">
+                                @group.Count() Yetenek
+                            </span>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3 mt-4">
+                            @foreach (var skill in group)
+                            {
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-semibold text-white small d-flex align-items-center gap-2">
+                                            <i class="bi bi-check-circle-fill text-success" style="font-size: 0.8rem;"></i> @skill.Title
+                                        </span>
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-0 small fw-bold" style="font-size: 0.75rem;">%@skill.Value</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px; background-color: rgba(255, 255, 255, 0.06); border-radius: 99px; overflow: hidden;">
+                                        <div class="progress-bar" role="progressbar" style="width: @skill.Value%; background: linear-gradient(90deg, #1d4ed8 0%, #38bdf8 100%); border-radius: 99px;" aria-valuenow="@skill.Value" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

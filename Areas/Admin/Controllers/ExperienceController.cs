@@ -12,6 +12,12 @@ namespace MY_Academy_Portfolio2.Areas.Admin.Controllers
         {
             _context = context;
         }
+
+        public IActionResult Index()
+        {
+            return RedirectToAction("ExperienceList");
+        }
+
         public IActionResult ExperienceList()
         {
             var values = _context.Experiences.ToList();

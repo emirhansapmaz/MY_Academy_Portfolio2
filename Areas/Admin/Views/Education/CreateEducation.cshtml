@@ -1,0 +1,51 @@
+@model MY_Academy_Portfolio2.Entities.Education
+
+@{
+    ViewData["Title"] = "Yeni Eğitim Ekle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<form method="post" asp-area="Admin" asp-action="CreateEducation">
+    <div class="container-fluid p-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                <div class="form-card-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-0">Yeni Eğitim Bilgisi Ekle</h5>
+                    <span class="text-secondary small">Eğitim ve akademik yolculuğunuza ait detayları girin.</span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Okul / Üniversite Adı *</label>
+                    <input type="text" asp-for="Title" class="form-control" placeholder="Örn: Marmara Üniversitesi" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Bölüm / Derece *</label>
+                    <input type="text" asp-for="SubTitle" class="form-control" placeholder="Örn: Bilgisayar Mühendisliği — Lisans" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tarih Aralığı *</label>
+                    <input type="text" asp-for="Duration" class="form-control" placeholder="Örn: 2020 – 2024" required />
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Açıklama & Ders / Kazanım Bilgisi *</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Aldığınız eğitim, odaklandığınız alanlar hakkında kısa açıklama..." required></textarea>
+                </div>
+
+                <div class="col-12 mt-4 pt-2 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-lg me-1"></i> Eğitimi Kaydet
+                    </button>
+                    <a href="/Admin/Education/Index" class="btn btn-outline-secondary px-4">Vazgeç</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

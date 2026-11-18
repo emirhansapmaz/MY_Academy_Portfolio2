@@ -1,0 +1,69 @@
+@model List<MY_Academy_Portfolio2.Entities.Skill>
+
+@{
+    ViewData["Title"] = "Yetenek Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">Yetenek & Yetkinlik Listesi</h4>
+            <p class="text-secondary small mb-0">Portfolyo sitesinde sergilenen tüm teknik becerilerinizi buradan yönetebilirsiniz.</p>
+        </div>
+        <a href="/Admin/Skill/CreateSkill" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Yeni Yetenek Ekle
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Yetenek Adı</th>
+                        <th>Kategori</th>
+                        <th style="min-width: 180px;">Seviye / Oran</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SkillId</td>
+                            <td class="fw-semibold text-white">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>@item.Title
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-primary border">
+                                    @(string.IsNullOrWhiteSpace(item.Category) ? "Genel" : item.Category)
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="progress flex-grow-1" style="height: 6px; background-color: rgba(255, 255, 255, 0.08); border-radius: 99px;">
+                                        <div class="progress-bar" role="progressbar" style="width: @item.Value%; background: linear-gradient(90deg, #1d4ed8, #38bdf8); border-radius: 99px;" aria-valuenow="@item.Value" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="text-secondary small fw-bold" style="min-width: 38px;">%@item.Value</span>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="/Admin/Skill/DeleteSkill/@item.SkillId" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu yeteneği silmek istediğinize emin misiniz?');">
+                                    <i class="bi bi-trash"></i> Sil
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/Admin/Skill/UpdateSkill/@item.SkillId" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-pencil"></i> Güncelle
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

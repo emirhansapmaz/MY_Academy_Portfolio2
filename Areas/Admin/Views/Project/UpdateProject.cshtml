@@ -1,0 +1,60 @@
+@model MY_Academy_Portfolio2.Entities.Project
+
+@{
+    ViewData["Title"] = "Proje Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<form method="post" asp-area="Admin" asp-action="UpdateProject">
+    <input type="hidden" asp-for="ProjectId" />
+
+    <div class="container-fluid p-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                <div class="form-card-icon">
+                    <i class="bi bi-pencil-square"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-0">Projeyi Güncelle</h5>
+                    <span class="text-secondary small">Projenin başlık, açıklama, kategori ve bağlantılarını düzenleyin.</span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Proje Başlığı *</label>
+                    <input type="text" asp-for="Title" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Proje Kategorisi *</label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select" required>
+                        <option value="">Kategori Seçiniz</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Görsel URL (Kapak Görseli) *</label>
+                    <input type="text" asp-for="CoverImageUrl" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">GitHub URL *</label>
+                    <input type="url" asp-for="GithubUrl" class="form-control" required />
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Proje Açıklaması *</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <div class="col-12 mt-4 pt-2 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-lg me-1"></i> Değişiklikleri Kaydet
+                    </button>
+                    <a href="/Admin/Project/Index" class="btn btn-outline-secondary px-4">Vazgeç</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
