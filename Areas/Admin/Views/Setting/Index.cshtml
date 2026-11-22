@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Site Ayarları & CV Yönetimi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">Site Ayarları & Dosya Yönetimi</h4>
+            <p class="text-secondary small mb-0">Portfolyo sitesinde indirilebilir CV belgesini ve genel parametreleri yönetin.</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- 04 | CV İndir & Yönetimi -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="form-card-icon" style="background: rgba(239, 68, 68, 0.15); color: #F87171; border-color: rgba(239, 68, 68, 0.3);">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">CV Dosyası Yönetimi</h5>
+                        <span class="text-secondary small">Ana sayfadaki "CV İndir" butonunun indireceği dosya.</span>
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-4 mb-4" style="background: var(--navy-900, #0B1325); border: 1px solid var(--border-color);">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-filetype-pdf fs-1 text-danger"></i>
+                        <div>
+                            <div class="fw-bold text-white">@ViewBag.CurrentCvName</div>
+                            <small class="text-secondary">
+                                Boyut: @ViewBag.FileSizeKb KB
+                                @if (ViewBag.UploadDate != null)
+                                {
+                                    <span>• Güncellenme: @(((DateTime)ViewBag.UploadDate).ToString("dd.MM.yyyy HH:mm"))</span>
+                                }
+                            </small>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2 border-top border-secondary border-opacity-10 d-flex gap-2">
+                        <a href="/Default/DownloadCv" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-download me-1"></i> Mevcut CV'yi Test İndir
+                        </a>
+                    </div>
+                </div>
+
+                <form method="post" asp-area="Admin" asp-action="UploadCv" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-white">Yeni CV Yükle (Yalnızca .PDF)</label>
+                        <input type="file" name="cvFile" accept=".pdf,application/pdf" class="form-control" required />
+                        <div class="form-text text-secondary small">Maksimum dosya boyutu: 10 MB. Dosya doğrudan wwwroot/uploads/cv dizinine güvenle kaydedilir.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary px-4 mt-2">
+                        <i class="bi bi-cloud-arrow-up me-1"></i> Yeni CV'yi Kaydet ve Güncelle
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sistem ve Tasarım Özeti -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="form-card-icon" style="background: rgba(37, 99, 235, 0.15); color: #60A5FA; border-color: rgba(96, 165, 250, 0.24);">
+                        <i class="bi bi-info-circle"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Sistem & Bilgi</h5>
+                        <span class="text-secondary small">Mimari ve sunucu konfigürasyonu.</span>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+                    <li class="d-flex justify-content-between p-3 rounded-3" style="background: var(--navy-900, #0B1325);">
+                        <span class="text-secondary">Uygulama Mimarisi:</span>
+                        <span class="fw-semibold text-white">ASP.NET Core 8.0 MVC</span>
+                    </li>
+                    <li class="d-flex justify-content-between p-3 rounded-3" style="background: var(--navy-900, #0B1325);">
+                        <span class="text-secondary">Veritabanı Sağlayıcısı:</span>
+                        <span class="fw-semibold text-white">MS SQL Server (EF Core Code-First)</span>
+                    </li>
+                    <li class="d-flex justify-content-between p-3 rounded-3" style="background: var(--navy-900, #0B1325);">
+                        <span class="text-secondary">UI Tasarımı:</span>
+                        <span class="fw-semibold text-white">Custom Dark Theme & Bootstrap 5.3</span>
+                    </li>
+                    <li class="d-flex justify-content-between p-3 rounded-3" style="background: var(--navy-900, #0B1325);">
+                        <span class="text-secondary">Dosya Depolama:</span>
+                        <span class="fw-semibold text-white">wwwroot/uploads/cv</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

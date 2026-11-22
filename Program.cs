@@ -66,6 +66,22 @@ using (var scope = app.Services.CreateScope())
             );
             context.SaveChanges();
         }
+
+        var existingAbout = context.Abouts.FirstOrDefault();
+        if (existingAbout != null && existingAbout.NameSurname != null && existingAbout.NameSurname.Contains("Poyraz"))
+        {
+            existingAbout.NameSurname = "Emirhan Sapmaz";
+            existingAbout.Email = existingAbout.Email.Replace("poyraz.alsever", "emirhan.sapmaz").Replace("poyraz", "emirhan");
+            existingAbout.Description = existingAbout.Description.Replace("Poyraz Alsever", "Emirhan Sapmaz").Replace("Poyraz", "Emirhan");
+            context.SaveChanges();
+        }
+
+        var existingHero = context.HeroSections.FirstOrDefault();
+        if (existingHero != null && existingHero.Subtitle != null && existingHero.Subtitle.Contains("Poyraz"))
+        {
+            existingHero.Subtitle = "Emirhan Sapmaz";
+            context.SaveChanges();
+        }
     }
     catch
     {

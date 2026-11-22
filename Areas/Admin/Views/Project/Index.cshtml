@@ -3,17 +3,65 @@
 @{
     ViewData["Title"] = "Proje Listesi";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+
+    string currentSearch = ViewBag.CurrentSearch as string ?? "";
+    int? selectedCategory = ViewBag.SelectedCategoryId as int?;
 }
 
 <div class="container-fluid p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
             <h4 class="fw-bold mb-1">Projelerim</h4>
-            <p class="text-secondary small mb-0">Portfolyo sitesinde listelenen ve SQL veritabanından çekilen projeleriniz.</p>
+            <p class="text-secondary small mb-0">Portfolyo sitesinde listelenen projeleri filtreleyebilir, yönetebilirsiniz.</p>
         </div>
-        <a href="/Admin/Project/CreateProject" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-1"></i> Yeni Proje Ekle
-        </a>
+        <div class="d-flex gap-2">
+            <a href="/Admin/Category/Index" class="btn btn-outline-secondary">
+                <i class="bi bi-tag me-1"></i> Kategorileri Yönet
+            </a>
+            <a href="/Admin/Project/CreateProject" class="btn btn-primary">
+                <i class="bi bi-plus-lg me-1"></i> Yeni Proje Ekle
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Arama ve Kategori Filtresi (Kullanıcı Deneyimi Geliştirmesi) -->
+    <div class="card shadow-sm border-0 rounded-4 p-3 mb-4" style="background: var(--card-bg, #0F1A32); border: 1px solid var(--border-color) !important;">
+        <form method="get" asp-area="Admin" asp-controller="Project" asp-action="Index" class="row g-2 align-items-center">
+            <div class="col-lg-6 col-md-5">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-secondary">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="search" value="@currentSearch" class="form-control" placeholder="Proje adı veya açıklama ile ara..." />
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
+                <select name="categoryId" class="form-select" asp-items="ViewBag.Categories">
+                    <option value="">Tüm Kategoriler</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel"></i> Filtrele
+                </button>
+                @if (!string.IsNullOrEmpty(currentSearch) || selectedCategory.HasValue)
+                {
+                    <a href="/Admin/Project/Index" class="btn btn-outline-secondary" title="Filtreyi Temizle">
+                        <i class="bi bi-x-lg"></i>
+                    </a>
+                }
+            </div>
+        </form>
     </div>
 
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
@@ -21,49 +69,61 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>#</th>
-                        <th>Görsel</th>
+                        <th style="width: 60px;">#</th>
+                        <th style="width: 80px;">Görsel</th>
                         <th>Proje Başlığı</th>
                         <th>Kategori</th>
                         <th>Açıklama</th>
-                        <th>GitHub</th>
-                        <th>Sil</th>
-                        <th>Güncelle</th>
+                        <th style="width: 80px;">GitHub</th>
+                        <th style="width: 90px;">Sil</th>
+                        <th style="width: 100px;">Güncelle</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @if (Model == null || !Model.Any())
                     {
                         <tr>
-                            <td>@item.ProjectId</td>
-                            <td>
-                                <img src="@item.CoverImageUrl" alt="@item.Title" style="width: 64px; height: 40px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);" />
-                            </td>
-                            <td class="fw-semibold text-white">@item.Title</td>
-                            <td>
-                                <span class="badge bg-light text-primary border">
-                                    @(item.Category?.CategoryName ?? "Genel")
-                                </span>
-                            </td>
-                            <td class="text-secondary small" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                @item.Description
-                            </td>
-                            <td>
-                                <a href="@item.GithubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-github"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/Admin/Project/DeleteProject/@item.ProjectId" class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i> Sil
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/Admin/Project/UpdateProject/@item.ProjectId" class="btn btn-sm btn-outline-success">
-                                    <i class="bi bi-pencil"></i> Güncelle
-                                </a>
+                            <td colspan="8" class="text-center py-5 text-secondary">
+                                <i class="bi bi-folder-x fs-1 d-block mb-2"></i>
+                                Gösterilecek proje kaydı bulunamadı.
                             </td>
                         </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ProjectId</td>
+                                <td>
+                                    <img src="@item.CoverImageUrl" alt="@item.Title" style="width: 64px; height: 42px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=200&auto=format&fit=crop&q=80'" />
+                                </td>
+                                <td class="fw-semibold text-white">@item.Title</td>
+                                <td>
+                                    <span class="badge bg-light text-primary border px-2 py-1">
+                                        @(item.Category?.CategoryName ?? "Genel")
+                                    </span>
+                                </td>
+                                <td class="text-secondary small" style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    @item.Description
+                                </td>
+                                <td>
+                                    <a href="@item.GithubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary" title="GitHub Sayfası">
+                                        <i class="bi bi-github"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/Project/DeleteProject/@item.ProjectId" class="btn btn-sm btn-outline-danger btn-delete-confirm" data-item-title="@item.Title">
+                                        <i class="bi bi-trash"></i> Sil
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/Project/UpdateProject/@item.ProjectId" class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-pencil"></i> Güncelle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

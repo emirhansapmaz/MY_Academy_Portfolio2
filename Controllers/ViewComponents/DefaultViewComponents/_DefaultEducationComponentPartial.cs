@@ -12,7 +12,10 @@ namespace MY_Academy_Portfolio2.Controllers.ViewComponents.DefaultViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var values = _context.Educations.ToList();
+            // Case 01: Eğitim kayıtları tarihe/sıraya göre listelenir
+            var values = _context.Educations
+                .OrderByDescending(x => x.EducationId)
+                .ToList();
             return View(values);
         }
     }

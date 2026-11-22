@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
 
-<form method="post" asp-area="Admin" asp-action="CreateProject">
+<form method="post" asp-area="Admin" asp-action="CreateProject" enctype="multipart/form-data">
     <div class="container-fluid p-4">
         <div class="card shadow-sm border-0 rounded-4 p-4">
             <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
@@ -18,32 +18,46 @@
                 </div>
             </div>
 
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3"></div>
+
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label">Proje Başlığı *</label>
-                    <input type="text" asp-for="Title" class="form-control" placeholder="Örn: E-Ticaret Web Sitesi" required />
+                    <label asp-for="Title" class="form-label">Proje Başlığı *</label>
+                    <input type="text" asp-for="Title" class="form-control" placeholder="Örn: E-Ticaret Web Sitesi" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Proje Kategorisi *</label>
-                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select" required>
+                    <label asp-for="CategoryId" class="form-label">Proje Kategorisi *</label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
                         <option value="">Kategori Seçiniz</option>
                     </select>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                </div>
+
+                <!-- 06 | Dosya Yükleme (IFormFile) veya Görsel URL -->
+                <div class="col-md-6">
+                    <label class="form-label">Proje Görseli Dosyası (Bilgisayardan Yükle)</label>
+                    <input type="file" name="imageFile" accept=".jpg,.jpeg,.png,.webp,.svg" class="form-control" />
+                    <small class="text-secondary" style="font-size: 0.75rem;">Seçerseniz otomatik olarak wwwroot/uploads/projects dizinine kaydedilir.</small>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Görsel URL (Kapak Görseli) *</label>
-                    <input type="text" asp-for="CoverImageUrl" class="form-control" placeholder="Örn: https://... veya /images/project1.jpg" required />
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">GitHub URL *</label>
-                    <input type="url" asp-for="GithubUrl" class="form-control" placeholder="Örn: https://github.com/kullanici/proje" required />
+                    <label asp-for="CoverImageUrl" class="form-label">Veya Görsel URL Adresi</label>
+                    <input type="text" asp-for="CoverImageUrl" class="form-control" placeholder="Örn: https://... veya boş bırakın" />
+                    <span asp-validation-for="CoverImageUrl" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12">
-                    <label class="form-label">Proje Açıklaması *</label>
-                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Projenin amacı, mimarisi ve çözdüğü problem hakkında bilgi veriniz..." required></textarea>
+                    <label asp-for="GithubUrl" class="form-label">GitHub URL *</label>
+                    <input type="url" asp-for="GithubUrl" class="form-control" placeholder="Örn: https://github.com/kullanici/proje" />
+                    <span asp-validation-for="GithubUrl" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label">Proje Açıklaması *</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Projenin amacı, mimarisi ve çözdüğü problem hakkında bilgi veriniz..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 mt-4 pt-2 border-top d-flex gap-2">

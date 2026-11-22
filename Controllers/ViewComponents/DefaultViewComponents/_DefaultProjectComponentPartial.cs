@@ -13,8 +13,11 @@ namespace MY_Academy_Portfolio2.Controllers.ViewComponents.DefaultViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var values = _context.Projects.Include(x => x.Category).ToList();
-            return View(values);
+            var categories = _context.Categories.ToList();
+            ViewBag.Categories = categories;
+
+            var projects = _context.Projects.Include(x => x.Category).ToList();
+            return View(projects);
         }
     }
 }

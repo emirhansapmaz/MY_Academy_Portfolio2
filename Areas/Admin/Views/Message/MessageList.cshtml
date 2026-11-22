@@ -3,69 +3,300 @@
 @{
     ViewData["Title"] = "İletişim & Mesaj Listesi";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+
+    string currentSearch = ViewBag.CurrentSearch as string ?? "";
+    string currentStatus = ViewBag.CurrentStatus as string ?? "";
+    string currentSort = ViewBag.CurrentSort as string ?? "newest";
+    int totalCount = ViewBag.TotalCount ?? Model.Count;
+    int unreadCount = ViewBag.UnreadCount ?? 0;
+    int readCount = ViewBag.ReadCount ?? 0;
 }
 
 <div class="container-fluid p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Başlık ve İstatistik Rozetleri -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <div>
             <h4 class="fw-bold mb-1">İletişim & Gelen Mesajlar</h4>
-            <p class="text-secondary small mb-0">Web sitenizin iletişim formundan iletilen mesajları buradan inceleyebilirsiniz.</p>
+            <p class="text-secondary small mb-0">Web sitesinin iletişim formundan iletilen mesajları filtreleyin ve yönetin.</p>
         </div>
-        <span class="badge bg-light text-primary border px-3 py-2 fw-semibold">Toplam: @Model.Count Mesaj</span>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-light text-primary border px-3 py-2 fw-semibold">
+                <i class="bi bi-inbox me-1"></i> Toplam: @totalCount
+            </span>
+            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 fw-semibold">
+                <i class="bi bi-envelope-exclamation me-1"></i> Okunmamış: @unreadCount
+            </span>
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fw-semibold">
+                <i class="bi bi-check2-all me-1"></i> Okunmuş: @readCount
+            </span>
+        </div>
     </div>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- 03 | Arama, Durum Filtresi ve Sıralama Çubuğu -->
+    <div class="card shadow-sm border-0 rounded-4 p-3 mb-4" style="background: var(--card-bg, #0F1A32); border: 1px solid var(--border-color) !important;">
+        <form method="get" asp-area="Admin" asp-controller="Message" asp-action="MessageList" class="row g-2 align-items-center">
+            <!-- Arama -->
+            <div class="col-lg-5 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-secondary">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="search" value="@currentSearch" class="form-control" placeholder="Gönderen adı, konu veya e-posta ile ara..." />
+                </div>
+            </div>
+
+            <!-- Durum Filtresi -->
+            <div class="col-lg-3 col-md-3">
+                <select name="status" class="form-select">
+                    <option value="">Tüm Mesajlar</option>
+                    @if (currentStatus == "unread")
+                    {
+                        <option value="unread" selected>Sadece Okunmamış (@unreadCount)</option>
+                    }
+                    else
+                    {
+                        <option value="unread">Sadece Okunmamış (@unreadCount)</option>
+                    }
+                    @if (currentStatus == "read")
+                    {
+                        <option value="read" selected>Sadece Okunmuş (@readCount)</option>
+                    }
+                    else
+                    {
+                        <option value="read">Sadece Okunmuş (@readCount)</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Sıralama -->
+            <div class="col-lg-2 col-md-3">
+                <select name="sort" class="form-select">
+                    @if (currentSort == "oldest")
+                    {
+                        <option value="newest">En Yeni İlk</option>
+                        <option value="oldest" selected>En Eski İlk</option>
+                    }
+                    else
+                    {
+                        <option value="newest" selected>En Yeni İlk</option>
+                        <option value="oldest">En Eski İlk</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Butonlar -->
+            <div class="col-lg-2 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel"></i> Filtrele
+                </button>
+                @if (!string.IsNullOrEmpty(currentSearch) || !string.IsNullOrEmpty(currentStatus) || currentSort != "newest")
+                {
+                    <a href="/Admin/Message/MessageList" class="btn btn-outline-secondary" title="Filtreyi Temizle">
+                        <i class="bi bi-x-lg"></i>
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+
+    <!-- Mesajlar Tablosu -->
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>#</th>
+                        <th style="width: 60px;">#</th>
                         <th>Gönderen</th>
                         <th>E-posta</th>
                         <th>Konu</th>
                         <th>Tarih</th>
                         <th>Durum</th>
-                        <th>İncele</th>
-                        <th>Sil</th>
+                        <th style="width: 120px;">İncele</th>
+                        <th style="width: 90px;">Sil</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @if (Model == null || !Model.Any())
                     {
                         <tr>
-                            <td>@item.MessageId</td>
-                            <td class="fw-semibold text-white">@item.NameSurname</td>
-                            <td><a href="mailto:@item.Email" class="text-secondary text-decoration-none small">@item.Email</a></td>
-                            <td class="fw-medium">@item.Subject</td>
-                            <td>
-                                <span class="text-secondary small">
-                                    <i class="bi bi-clock me-1"></i>@item.SendDate.ToString("dd MMM yyyy HH:mm")
-                                </span>
-                            </td>
-                            <td>
-                                @if (item.IsRead)
-                                {
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small">Okundu</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-2 py-1 small">Yeni</span>
-                                }
-                            </td>
-                            <td>
-                                <a href="/Admin/Message/MessageDetail/@item.MessageId" class="btn btn-sm btn-primary">
-                                    <i class="bi bi-envelope-open me-1"></i> Mesajı Aç
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/Admin/Message/DeleteMessage/@item.MessageId" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');">
-                                    <i class="bi bi-trash"></i> Sil
-                                </a>
+                            <td colspan="8" class="text-center py-5 text-secondary">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                Aradığınız kriterlere uygun herhangi bir mesaj bulunamadı.
                             </td>
                         </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr id="message-row-@item.MessageId" style="@(!item.IsRead ? "background: rgba(37, 99, 235, 0.05);" : "")">
+                                <td>@item.MessageId</td>
+                                <td class="fw-semibold text-white">@item.NameSurname</td>
+                                <td><a href="mailto:@item.Email" class="text-secondary text-decoration-none small">@item.Email</a></td>
+                                <td class="fw-medium text-truncate" style="max-width: 240px;">@item.Subject</td>
+                                <td>
+                                    <span class="text-secondary small">
+                                        <i class="bi bi-clock me-1"></i>@item.SendDate.ToString("dd MMM yyyy HH:mm")
+                                    </span>
+                                </td>
+                                <td id="status-cell-@item.MessageId">
+                                    @if (item.IsRead)
+                                    {
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small">Okundu</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-2 py-1 small">Yeni</span>
+                                    }
+                                </td>
+                                <td>
+                                    <!-- 03 | Bootstrap Modal ile Detay Açma -->
+                                    <button type="button"
+                                            class="btn btn-sm btn-primary btn-open-message"
+                                            data-id="@item.MessageId"
+                                            data-name="@item.NameSurname"
+                                            data-email="@item.Email"
+                                            data-subject="@item.Subject"
+                                            data-date="@item.SendDate.ToString("dd MMMM yyyy HH:mm")"
+                                            data-content="@item.MessageContent"
+                                            data-read="@item.IsRead.ToString().ToLower()">
+                                        <i class="bi bi-envelope-open me-1"></i> Mesajı Aç
+                                    </button>
+                                </td>
+                                <td>
+                                    <!-- SweetAlert2 Onaylı Silme -->
+                                    <a href="/Admin/Message/DeleteMessage/@item.MessageId" 
+                                       class="btn btn-sm btn-outline-danger btn-delete-confirm" 
+                                       data-item-title="@item.NameSurname gönderili mesaj">
+                                        <i class="bi bi-trash"></i> Sil
+                                    </a>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<!-- 03 | Mesaj Detay Bootstrap Modal (Gelen mesajın orijinal içeriği düzenlenemez - ReadOnly) -->
+<div class="modal fade" id="messageDetailModal" tabindex="-1" aria-labelledby="messageDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0 rounded-4" style="background-color: var(--card-bg, #0B132B); border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)) !important;">
+            <div class="modal-header border-bottom py-3 px-4" style="border-color: rgba(255, 255, 255, 0.08) !important;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="form-card-icon" style="width: 40px; height: 40px; font-size: 1.1rem; border-radius: 10px; background: rgba(37, 99, 235, 0.16); color: var(--steel-ice, #38BDF8); display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold text-white mb-0" id="messageDetailModalLabel">Mesaj Detayı</h5>
+                        <small class="text-secondary" id="modalMessageDate"></small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase fw-semibold mb-1">Gönderen</label>
+                        <div class="fw-bold text-white fs-6 p-2 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);" id="modalSenderName"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase fw-semibold mb-1">E-posta</label>
+                        <div>
+                            <a href="#" id="modalSenderEmail" class="text-decoration-none text-primary fw-semibold d-flex align-items-center gap-2 p-2 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);">
+                                <i class="bi bi-envelope-at"></i>
+                                <span id="modalSenderEmailText"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted small text-uppercase fw-semibold mb-1">Konu</label>
+                        <div class="fw-semibold text-white fs-6 p-2 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);" id="modalMessageSubject"></div>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label text-muted small text-uppercase fw-semibold mb-2">Orijinal Mesaj İçeriği (Salt Okunur)</label>
+                    <div class="p-3 rounded-3" id="modalMessageContent" style="background: var(--navy-900, #080D1A); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary, #E2E8F0); min-height: 140px; max-height: 380px; overflow-y: auto; line-height: 1.7; white-space: pre-wrap; font-size: 0.95rem;"></div>
+                </div>
+            </div>
+            <div class="modal-footer border-top py-3 px-4 d-flex justify-content-between" style="border-color: rgba(255, 255, 255, 0.08) !important;">
+                <a href="#" id="modalDeleteBtn" class="btn btn-outline-danger btn-delete-confirm" data-item-title="Bu mesaj">
+                    <i class="bi bi-trash me-1"></i> Mesajı Sil
+                </a>
+                <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check2 me-1"></i> Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modalEl = document.getElementById('messageDetailModal');
+            if (!modalEl) return;
+            const modal = new bootstrap.Modal(modalEl);
+
+            const modalSenderName = document.getElementById('modalSenderName');
+            const modalSenderEmail = document.getElementById('modalSenderEmail');
+            const modalSenderEmailText = document.getElementById('modalSenderEmailText');
+            const modalMessageSubject = document.getElementById('modalMessageSubject');
+            const modalMessageDate = document.getElementById('modalMessageDate');
+            const modalMessageContent = document.getElementById('modalMessageContent');
+            const modalDeleteBtn = document.getElementById('modalDeleteBtn');
+
+            document.querySelectorAll('.btn-open-message').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const email = this.getAttribute('data-email');
+                    const subject = this.getAttribute('data-subject');
+                    const date = this.getAttribute('data-date');
+                    const content = this.getAttribute('data-content');
+                    const isRead = this.getAttribute('data-read') === 'true';
+
+                    modalSenderName.textContent = name;
+                    modalSenderEmail.href = 'mailto:' + email;
+                    modalSenderEmailText.textContent = email;
+                    modalMessageSubject.textContent = subject;
+                    modalMessageDate.textContent = date;
+                    modalMessageContent.textContent = content;
+                    modalDeleteBtn.href = '/Admin/Message/DeleteMessage/' + id;
+
+                    modal.show();
+
+                    if (!isRead) {
+                        this.setAttribute('data-read', 'true');
+                        fetch('/Admin/Message/MarkAsRead?id=' + id, {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        }).then(() => {
+                            const statusCell = document.getElementById('status-cell-' + id);
+                            if (statusCell) {
+                                statusCell.innerHTML = '<span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small">Okundu</span>';
+                            }
+                            const row = document.getElementById('message-row-' + id);
+                            if (row) {
+                                row.style.background = '';
+                            }
+                        }).catch(() => {});
+                    }
+                });
+            });
+        });
+    </script>
+}

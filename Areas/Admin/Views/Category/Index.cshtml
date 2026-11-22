@@ -1,0 +1,90 @@
+@model List<MY_Academy_Portfolio2.Entities.Category>
+
+@{
+    ViewData["Title"] = "Kategori Yönetimi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">Proje Kategorileri</h4>
+            <p class="text-secondary small mb-0">Projelerinizi grupladığınız kategorileri buradan yönetebilirsiniz.</p>
+        </div>
+        <a href="/Admin/Category/CreateCategory" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Yeni Kategori Ekle
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show border-0 rounded-4 mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 80px;">#</th>
+                        <th>Kategori Adı</th>
+                        <th>Bağlı Proje Sayısı</th>
+                        <th style="width: 100px;">Sil</th>
+                        <th style="width: 110px;">Güncelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-secondary">
+                                <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
+                                Henüz tanımlanmış bir kategori bulunmuyor.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.CategoryId</td>
+                                <td class="fw-semibold text-white">
+                                    <i class="bi bi-tag me-2 text-primary"></i>@item.CategoryName
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-primary border px-3 py-1">
+                                        @(item.Projects?.Count ?? 0) Proje
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Admin/Category/DeleteCategory/@item.CategoryId" 
+                                       class="btn btn-sm btn-outline-danger btn-delete-confirm" 
+                                       data-item-title="@item.CategoryName">
+                                        <i class="bi bi-trash"></i> Sil
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-pencil"></i> Güncelle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

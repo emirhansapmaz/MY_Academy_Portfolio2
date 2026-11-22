@@ -213,14 +213,17 @@
       background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%);
       color: #FFFFFF !important;
       border: 1px solid rgba(96, 165, 250, 0.35);
-      padding: 0.68rem 1.45rem;
+      padding: 0.62rem 1.35rem;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 0.925rem;
-      box-shadow: 0 6px 20px rgba(29, 78, 216, 0.35);
+      font-size: 0.875rem;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      box-shadow: 0 4px 16px rgba(29, 78, 216, 0.35);
       transition: var(--transition-smooth);
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       text-decoration: none;
     }
@@ -228,7 +231,7 @@
     .btn-custom-primary:hover {
       background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
       transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45);
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
       color: #FFFFFF !important;
       border-color: rgba(147, 197, 253, 0.6);
     }
@@ -237,13 +240,16 @@
       background: rgba(255, 255, 255, 0.03);
       color: var(--text-primary) !important;
       border: 1px solid var(--border-color);
-      padding: 0.65rem 1.45rem;
+      padding: 0.62rem 1.35rem;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 0.925rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
       transition: var(--transition-smooth);
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       text-decoration: none;
     }
@@ -253,6 +259,18 @@
       color: #FFFFFF !important;
       background: rgba(37, 99, 235, 0.12);
       transform: translateY(-2px);
+    }
+
+    #btnDownloadCv {
+      padding: 0.42rem 1.15rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: 50px;
+      gap: 0.4rem;
+      line-height: 1.35;
+    }
+    #btnDownloadCv i {
+      font-size: 0.95rem;
     }
 
     /* Hero Section */
@@ -332,8 +350,8 @@
     }
 
     .social-btn {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
@@ -343,14 +361,14 @@
       color: var(--text-secondary);
       transition: var(--transition-smooth);
       text-decoration: none;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
     }
 
     .social-btn:hover {
       color: #FFFFFF;
       border-color: var(--steel-ice);
       background: var(--navy-750);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     }
 
@@ -660,12 +678,17 @@
       background: var(--navy-850);
       border: 1px solid var(--border-color);
       color: var(--text-secondary);
-      padding: 0.5rem 1.25rem;
+      padding: 0.4rem 1.1rem;
       border-radius: 50px;
-      font-size: 0.88rem;
+      font-size: 0.8125rem;
       font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: 0.01em;
       transition: var(--transition-smooth);
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .filter-btn:hover {
@@ -755,17 +778,37 @@
     .project-link-btn {
       color: var(--steel-light);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 600;
+      line-height: 1.3;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
       transition: var(--transition-smooth);
     }
 
     .project-link-btn:hover {
       color: #FFFFFF;
-      transform: translateX(2px);
+      background: rgba(37, 99, 235, 0.16);
+      border-color: var(--steel-ice-border);
+      transform: translateY(-1px);
+    }
+
+    .project-link-btn.text-primary {
+      color: var(--steel-ice) !important;
+      background: rgba(37, 99, 235, 0.1);
+      border-color: rgba(96, 165, 250, 0.28);
+    }
+
+    .project-link-btn.text-primary:hover {
+      color: #FFFFFF !important;
+      background: rgba(37, 99, 235, 0.25);
+      border-color: var(--steel-ice);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 
     /* Workflow Section */
@@ -876,6 +919,19 @@
       box-shadow: var(--shadow-card);
     }
 
+    #btnSendMessage {
+      padding: 0.72rem 1.5rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 12px;
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+      gap: 0.5rem;
+    }
+    #btnSendMessage i {
+      font-size: 0.95rem;
+    }
+
     .form-control, .form-select {
       border: 1px solid var(--border-color);
       border-radius: 12px;
@@ -953,8 +1009,8 @@
       position: fixed;
       bottom: 28px;
       right: 28px;
-      width: 46px;
-      height: 46px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--navy-800);
       border: 1px solid var(--steel-ice-border);
@@ -963,7 +1019,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: 1.05rem;
       cursor: pointer;
       opacity: 0;
       visibility: hidden;

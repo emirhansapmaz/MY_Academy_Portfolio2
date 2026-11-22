@@ -681,9 +681,9 @@
     <!-- ==================== SIDEBAR ==================== -->
     <aside id="sidebar-wrapper">
         <a href="/Admin" class="sidebar-brand">
-            <div class="brand-mark">P</div>
+            <div class="brand-mark">E</div>
             <div>
-                <div class="fw-bold text-white lh-1" style="font-family: 'Plus Jakarta Sans';">Poyraz.</div>
+                <div class="fw-bold text-white lh-1" style="font-family: 'Plus Jakarta Sans';">Emirhan.</div>
                 <small class="text-white-50" style="font-size: 0.72rem;">Portfolio Admin</small>
             </div>
         </a>
@@ -710,6 +710,9 @@
             <a href="/Admin/Project/Index" class="sidebar-link @Active("Project")">
                 <i class="bi bi-grid"></i><span>Projeler</span>
             </a>
+            <a href="/Admin/Category/Index" class="sidebar-link @Active("Category")">
+                <i class="bi bi-tags"></i><span>Kategoriler</span>
+            </a>
 
             <div class="nav-group-title">İletişim & Sistem</div>
             <a href="/Admin/Message/MessageList" class="sidebar-link @Active("Message") @Active("Contact")">
@@ -721,9 +724,9 @@
         </nav>
 
         <div class="sidebar-user">
-            <div class="user-avatar">MY</div>
+            <div class="user-avatar">ES</div>
             <div class="overflow-hidden">
-                <div class="fw-semibold text-white text-truncate" style="font-size: 0.83rem;">Murat Yücedağ</div>
+                <div class="fw-semibold text-white text-truncate" style="font-size: 0.83rem;">Emirhan Sapmaz</div>
                 <div style="font-size: 0.7rem; color: #B3BFDF;">Yönetici</div>
             </div>
         </div>
@@ -753,8 +756,8 @@
 
                 <div class="dropdown">
                     <button class="nav-user-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="user-avatar">MY</div>
-                        <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">Murat Yücedağ</span>
+                        <div class="user-avatar">ES</div>
+                        <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">Emirhan Sapmaz</span>
                         <i class="bi bi-chevron-down small text-secondary d-none d-md-inline"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -795,7 +798,7 @@
 
         <!-- FOOTER -->
         <footer class="admin-footer">
-            <span>© @DateTime.Now.Year Poyraz. Portfolio Admin — Tüm hakları saklıdır.</span>
+            <span>© @DateTime.Now.Year Emirhan. Portfolio Admin — Tüm hakları saklıdır.</span>
             <span>
                 <a href="/" target="_blank">Siteyi Görüntüle</a>
                 <span class="mx-2">•</span>
@@ -805,10 +808,45 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function toggleSidebar() {
             document.body.classList.toggle("sidebar-open");
         }
+
+        // Global Delete Confirmation Popup (SweetAlert2)
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.addEventListener("click", function (e) {
+                const btn = e.target.closest(".btn-delete-confirm");
+                if (btn) {
+                    e.preventDefault();
+                    const deleteUrl = btn.getAttribute("href") || btn.dataset.deleteUrl;
+                    const itemTitle = btn.dataset.itemTitle ? `"${btn.dataset.itemTitle}" kaydı` : "Bu kayıt";
+
+                    Swal.fire({
+                        title: 'Silmek istediğinizden emin misiniz?',
+                        text: `${itemTitle} kalıcı olarak silinecektir. Bu işlem geri alınamaz!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Evet, Sil!',
+                        cancelButtonText: 'Vazgeç',
+                        background: '#0B1325',
+                        color: '#F8FAFC',
+                        customClass: {
+                            popup: 'border border-secondary rounded-4 shadow-lg'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if (deleteUrl && deleteUrl !== "#") {
+                                window.location.href = deleteUrl;
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
