@@ -200,6 +200,7 @@ MY_Academy_Portfolio2/
 │   └── uploads/                             # Dinamik kullanıcı yüklemeleri
 │       ├── cv/                              # Yüklenen en son özgeçmiş (PDF)
 │       └── projects/                        # Projelere ait kapak görselleri
+├── screenshots/                             # Proje ekran görüntüleri (Vitrin & Admin)
 ├── Program.cs                               # Uygulama başlangıcı, DI, routing & seed logic
 ├── appsettings.json                         # Yapılandırma ayarları
 └── MY_Academy_Portfolio2.csproj             # Proje konfigürasyonu ve NuGet paketleri
@@ -291,24 +292,60 @@ fetch('/Default/SendMessage', {
 
 ## 📸 Arayüz ve Ekran Görüntüleri
 
+### 🌟 1. Kullanıcı Vitrini (Public Portfolio)
+
+#### 🔹 Hero & Karşılama Bölümü
+> Ziyaretçileri karşılayan modern koyu tema arayüzü; JavaScript daktilo (typing) animasyonu, dinamik biyografi, doğrudan iletişim ve proje yönlendirme butonları (CTA), navbar üzerinde dinamik **CV İndir** servisi ile süzülen *"Clean Code (C# & ASP.NET Core)"* ve *"Software Engineer"* yetkinlik rozetleri.
+
 <div align="center">
-
-### 🌟 Kullanıcı Vitrini (Public Portfolio)
-*Modern Glassmorphism tasarım, akıcı animasyonlar, teknoloji bandı ve dinamik proje filtreleme.*
-
-| Hero & Kayan Teknoloji Marquee | Dinamik Projeler & Kategori Filtresi |
-| :---: | :---: |
-| *(Karşılama, typing animasyonu ve sosyal bağlantılar)* | *(Kategori bazlı anlık JS filtreleme)* |
+  <img src="screenshots/hero-section.jpg" alt="Hero & Karşılama Bölümü" width="90%" />
+</div>
 
 <br/>
 
-### 📊 Yönetim Paneli (Admin Dark Dashboard)
-*Koyu lacivert tema, KPI istatistik kartları, son mesajlar ve proje dağılım analitiği.*
+#### 🔹 Teknik Yetkinlikler (Skills Section)
+> Veritabanında tanımlı yeteneklerin alanlarına göre (**Backend Development**, **Frontend Development**, **Database Technologies**) otomatik gruplandığı, her teknolojinin yüzde seviyesini ve animasyonlu ilerleme çubuğunu sergileyen dinamik modül.
 
-| Admin KPI Dashboard | Gelen Mesajlar & Filtreleme |
-| :---: | :---: |
-| *(Özet kartlar, kategori yüzdeleri & son aktiviteler)* | *(Okundu/Okunmadı filtresi, arama ve detay görünümü)* |
+<div align="center">
+  <img src="screenshots/skills-section.png" alt="Teknik Yetkinlikler" width="90%" />
+</div>
 
+<br/>
+
+#### 🔹 İletişim Bilgileri & AJAX Mesaj Formu
+> Sol alanda e-posta, lokasyon, LinkedIn ve GitHub profilleri ile ortalama yanıt süresi rozeti yer alır. Sağ alanda ise sayfa yenilenmeksizin çalışan, hem istemci hem de sunucu taraflı validasyon denetimlerine sahip, anlık geri bildirim üreten asenkron AJAX iletişim formu bulunmaktadır.
+
+<div align="center">
+  <img src="screenshots/contact-section.png" alt="İletişim & AJAX Mesaj Formu" width="90%" />
+</div>
+
+---
+
+### 📊 2. Yönetim Paneli (Admin Area - Dark Dashboard)
+
+#### 🔹 Yönetim Özeti & KPI Dashboard
+> Sistem durumunun anlık izlendiği yönetici ana sayfası; toplam proje, aktif yetenek, deneyim, eğitim ve okunmamış mesaj sayaçlarını içeren KPI kartları ile tek tıkla yeni proje ekleme veya portfolyoyu önizleme kısayolları.
+
+<div align="center">
+  <img src="screenshots/admin-dashboard.jpg" alt="Admin Dashboard & KPI" width="90%" />
+</div>
+
+<br/>
+
+#### 🔹 Yetenek & Beceri Yönetim Merkezi
+> Portfolyoda sergilenen tüm teknik becerilerin listelendiği yönetim tablosu. Yeni yetenek tanımlama, yüzde oranlarını ve kategorileri anlık güncelleme ve silme operasyonları buradan gerçekleştirilir.
+
+<div align="center">
+  <img src="screenshots/admin-skills.jpg" alt="Admin Yetenek Listesi" width="90%" />
+</div>
+
+<br/>
+
+#### 🔹 İletişim & Gelen Mesaj Kutusu
+> Ziyaretçilerin ilettiği mesajların yönetildiği gelen kutusu; dinamik metin araması, okunma durumu filtresi (Tüm Mesajlar / Okunmuş / Okunmamış), tarih sıralaması ve mesaj detayını açıp anında durumunu "Okundu" olarak işaretleyen aksiyon altyapısı.
+
+<div align="center">
+  <img src="screenshots/admin-messages.jpg" alt="Admin Mesaj Yönetimi" width="90%" />
 </div>
 
 ---
