@@ -546,6 +546,21 @@
             color: #fff !important;
         }
 
+        .btn-sm {
+            padding: 5px 12px !important;
+            font-size: 0.8125rem !important;
+            border-radius: 8px !important;
+            line-height: 1.35 !important;
+        }
+
+        .btn-primary.btn-sm,
+        .btn-accent.btn-sm {
+            padding: 5px 12px !important;
+            font-size: 0.8125rem !important;
+            border-radius: 8px !important;
+            font-weight: 500;
+        }
+
         .btn-outline-danger {
             border-color: rgba(239, 68, 68, 0.4);
             color: #F87171;
@@ -580,6 +595,36 @@
             border-color: var(--steel-ice);
             color: #fff;
             background: rgba(37, 99, 235, 0.12);
+        }
+
+        /* Admin Tablo İşlem Butonları (Sil, Güncelle, Mesajı Görüntüle) Standart Boyut */
+        .btn-action,
+        .table td .btn-action,
+        .table td .btn-open-message,
+        .table td .btn-outline-danger.btn-sm,
+        .table td .btn-outline-success.btn-sm {
+            width: 96px !important;
+            min-width: 96px !important;
+            max-width: 96px !important;
+            height: 32px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            padding: 0 8px !important;
+            font-size: 0.8125rem !important;
+            font-weight: 500 !important;
+            border-radius: 8px !important;
+            white-space: nowrap !important;
+            box-sizing: border-box !important;
+            line-height: 1 !important;
+        }
+
+        .btn-action i,
+        .table td .btn-action i,
+        .table td .btn-open-message i {
+            font-size: 0.85rem !important;
+            margin: 0 !important;
         }
 
         .badge.bg-success-subtle, .badge.text-success {

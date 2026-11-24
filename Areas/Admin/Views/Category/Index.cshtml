@@ -40,8 +40,8 @@
                         <th style="width: 80px;">#</th>
                         <th>Kategori Adı</th>
                         <th>Bağlı Proje Sayısı</th>
-                        <th style="width: 100px;">Sil</th>
-                        <th style="width: 110px;">Güncelle</th>
+                        <th style="width: 110px; text-align: center;">Sil</th>
+                        <th style="width: 110px; text-align: center;">Güncelle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,15 +68,15 @@
                                         @(item.Projects?.Count ?? 0) Proje
                                     </span>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a href="/Admin/Category/DeleteCategory/@item.CategoryId" 
-                                       class="btn btn-sm btn-outline-danger btn-delete-confirm" 
+                                       class="btn btn-sm btn-outline-danger btn-delete-confirm btn-action" 
                                        data-item-title="@item.CategoryName">
                                         <i class="bi bi-trash"></i> Sil
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-sm btn-outline-success">
+                                <td class="text-center">
+                                    <a href="/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-sm btn-outline-success btn-action">
                                         <i class="bi bi-pencil"></i> Güncelle
                                     </a>
                                 </td>

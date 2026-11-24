@@ -8,7 +8,7 @@ Layout = null;
 <!DOCTYPE html>
 <html lang="tr">
 @await Component.InvokeAsync("_DefaultHeadComponentPartial")
-<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="100">
+<body>
 
 
 
@@ -282,9 +282,57 @@ Layout = null;
         setTimeout(typeLoop, 500);
       }
 
-      // 2. NAVBAR SCROLL EFFECT & SCROLL TO TOP VISIBILITY
+      // 2. NAVBAR SCROLL EFFECT, ACTIVE SCROLLSPY & SCROLL TO TOP VISIBILITY
       const navbar = document.getElementById('mainNavbar');
       const scrollTopBtn = document.getElementById('scrollToTopBtn');
+      const navbarCollapse = document.getElementById('navbarContent');
+      const sections = document.querySelectorAll('section[id]');
+      const brandLink = document.querySelector('.navbar-brand');
+      const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+      function setActiveLink(id) {
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === '#' + id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      function updateActiveNavLink() {
+        const scrollY = window.scrollY;
+        const navbarHeight = navbar ? navbar.offsetHeight : 75;
+        const triggerPoint = scrollY + navbarHeight + 80;
+
+        // Sayfa sonuna gelindiğinde son bölümü (contact) aktif yap
+        const isBottom = (window.innerHeight + scrollY) >= (document.documentElement.scrollHeight - 60);
+        if (isBottom) {
+          setActiveLink('contact');
+          return;
+        }
+
+        // Sayfa başındayken ana sayfayı aktif yap
+        if (scrollY < 120) {
+          setActiveLink('home');
+          return;
+        }
+
+        let currentSectionId = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (triggerPoint >= sectionTop && triggerPoint < (sectionTop + sectionHeight)) {
+            currentSectionId = section.getAttribute('id');
+          }
+        });
+
+        if (currentSectionId) {
+          setActiveLink(currentSectionId);
+        }
+      }
 
       window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
@@ -294,7 +342,11 @@ Layout = null;
           navbar.classList.remove('scrolled');
           scrollTopBtn.classList.remove('visible');
         }
+          updateActiveNavLink();
       }, { passive: true });
+
+      window.addEventListener('resize', updateActiveNavLink);
+      updateActiveNavLink();
 
       // Scroll to Top action
       if (scrollTopBtn) {
@@ -306,11 +358,14 @@ Layout = null;
         });
       }
 
-      // Close mobile navbar on nav-link click
-      const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-      const navbarCollapse = document.getElementById('navbarContent');
+      // Nav-link tıklandığında anında aktif yap ve mobilde menüyü kapat
       navLinks.forEach(function (link) {
         link.addEventListener('click', function () {
+          const href = this.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            setActiveLink(href.substring(1));
+          }
+
           if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
             const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
             if (bsCollapse) {
@@ -319,6 +374,12 @@ Layout = null;
           }
         });
       });
+
+      if (brandLink) {
+        brandLink.addEventListener('click', function () {
+          setActiveLink('home');
+        });
+      }
 
       // 3. PROJECT FILTERING (Vanilla JS, data-category)
       const filterButtons = document.querySelectorAll('#projectFilterGroup .filter-btn');

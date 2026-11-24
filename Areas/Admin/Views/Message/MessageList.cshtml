@@ -119,8 +119,8 @@
                         <th>Konu</th>
                         <th>Tarih</th>
                         <th>Durum</th>
-                        <th style="width: 120px;">İncele</th>
-                        <th style="width: 90px;">Sil</th>
+                        <th style="width: 110px; text-align: center;">İncele</th>
+                        <th style="width: 110px; text-align: center;">Sil</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -157,10 +157,10 @@
                                         <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-2 py-1 small">Yeni</span>
                                     }
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <!-- 03 | Bootstrap Modal ile Detay Açma -->
                                     <button type="button"
-                                            class="btn btn-sm btn-primary btn-open-message"
+                                            class="btn btn-sm btn-primary btn-open-message btn-action"
                                             data-id="@item.MessageId"
                                             data-name="@item.NameSurname"
                                             data-email="@item.Email"
@@ -168,13 +168,13 @@
                                             data-date="@item.SendDate.ToString("dd MMMM yyyy HH:mm")"
                                             data-content="@item.MessageContent"
                                             data-read="@item.IsRead.ToString().ToLower()">
-                                        <i class="bi bi-envelope-open me-1"></i> Mesajı Aç
+                                        <i class="bi bi-envelope-open"></i> Mesajı Aç
                                     </button>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <!-- SweetAlert2 Onaylı Silme -->
                                     <a href="/Admin/Message/DeleteMessage/@item.MessageId" 
-                                       class="btn btn-sm btn-outline-danger btn-delete-confirm" 
+                                       class="btn btn-sm btn-outline-danger btn-delete-confirm btn-action" 
                                        data-item-title="@item.NameSurname gönderili mesaj">
                                         <i class="bi bi-trash"></i> Sil
                                     </a>

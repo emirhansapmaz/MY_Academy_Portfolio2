@@ -26,8 +26,8 @@
                         <th>Bölüm / Derece</th>
                         <th>Tarih Aralığı</th>
                         <th>Açıklama</th>
-                        <th>Sil</th>
-                        <th>Güncelle</th>
+                        <th style="width: 110px; text-align: center;">Sil</th>
+                        <th style="width: 110px; text-align: center;">Güncelle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,13 +43,13 @@
                                 </span>
                             </td>
                             <td class="text-secondary small" style="max-width: 280px;">@item.Description</td>
-                            <td>
-                                <a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-sm btn-outline-danger btn-delete-confirm" data-item-title="@item.Title">
+                            <td class="text-center">
+                                <a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-sm btn-outline-danger btn-delete-confirm btn-action" data-item-title="@item.Title">
                                     <i class="bi bi-trash"></i> Sil
                                 </a>
                             </td>
-                            <td>
-                                <a href="/Admin/Education/UpdateEducation/@item.EducationId" class="btn btn-sm btn-outline-success">
+                            <td class="text-center">
+                                <a href="/Admin/Education/UpdateEducation/@item.EducationId" class="btn btn-sm btn-outline-success btn-action">
                                     <i class="bi bi-pencil"></i> Güncelle
                                 </a>
                             </td>

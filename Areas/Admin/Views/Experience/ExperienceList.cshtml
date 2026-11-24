@@ -22,8 +22,8 @@
                         <th>Alt Başlık</th>
                         <th>Tarih</th>
                         <th>Durum</th>
-                        <th>Sil</th>
-                        <th>Güncelle</th>
+                        <th style="width: 110px; text-align: center;">Sil</th>
+                        <th style="width: 110px; text-align: center;">Güncelle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,8 +44,16 @@
                                     <span class="badge bg-secondary-subtle text-secondary">Pasif</span>
                                 }
                             </td>
-                            <td><a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-sm btn-outline-danger btn-delete-confirm" data-item-title="@item.SideTitle">Sil</a></td>
-                            <td><a href="/Admin/Experience/UpdateExperience/@item.ExperienceId" class="btn btn-sm btn-outline-success">Güncelle</a></td>
+                            <td class="text-center">
+                                <a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-sm btn-outline-danger btn-delete-confirm btn-action" data-item-title="@item.SideTitle">
+                                    <i class="bi bi-trash"></i> Sil
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/Admin/Experience/UpdateExperience/@item.ExperienceId" class="btn btn-sm btn-outline-success btn-action">
+                                    <i class="bi bi-pencil"></i> Güncelle
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>
